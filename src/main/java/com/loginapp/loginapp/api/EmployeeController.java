@@ -1,12 +1,12 @@
 package com.loginapp.loginapp.api;
 
+import com.loginapp.loginapp.exceptions.UserErrors;
 import com.loginapp.loginapp.model.Employee;
 import com.loginapp.loginapp.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RequestMapping("employees/signup")
@@ -28,7 +28,7 @@ public class EmployeeController
     }
 
    @GetMapping(path = "{employee_id}")
-   public Employee employee_details (@PathVariable("employee_id") UUID employee_id)
+   public Employee employee_details (@PathVariable("employee_id") UUID employee_id) throws UserErrors
     {
      Employee designated_employee = employee_service.retrieveEmployee(employee_id).orElse(null);
      return designated_employee;
