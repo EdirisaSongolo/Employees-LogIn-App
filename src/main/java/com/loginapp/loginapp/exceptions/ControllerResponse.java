@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ResponseStatus
 public class ControllerResponse extends ResponseEntityExceptionHandler
  {
+
   @ExceptionHandler(UserErrors.class)
   public ResponseEntity<SystemResponse> relaySystemResponse (UserErrors registeredError, WebRequest userRequest)
    {

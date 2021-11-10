@@ -11,6 +11,4 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 	 SpringApplication.run(LogInApp.class, args);
 	}
 
-
-
   }

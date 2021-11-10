@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@RequestMapping("employees/signup")
+@RequestMapping("employees")
 @RestController
 public class EmployeeController
  {
@@ -30,14 +30,14 @@ public class EmployeeController
    @GetMapping(path = "{employee_id}")
    public Employee employee_details (@PathVariable("employee_id") UUID employee_id) throws UserErrors
     {
-     Employee designated_employee = employee_service.retrieveEmployee(employee_id).orElse(null);
+     Employee designated_employee = employee_service.retrieveDesignatedEmployee(employee_id).orElse(null);
      return designated_employee;
     }
 
    @GetMapping
    public List<Employee> employees_list ()
     {
-     return employee_service.currentEmployees();
+     return employee_service.retrieveEmployeesList();
     }
 
  }

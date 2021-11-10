@@ -1,10 +1,10 @@
 package com.loginapp.loginapp.service;
 
+
 import com.loginapp.loginapp.dao.EmployeeDao;
 import com.loginapp.loginapp.exceptions.UserErrors;
 import com.loginapp.loginapp.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,41 +12,37 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
- public class EmployeeService
-  {
-   private final EmployeeDao employeeDao;
+public class EmployeeService implements ServiceInterface
+ {
+  private final EmployeeDao employee_dao;
 
-
-   @Autowired
-   public EmployeeService(@Qualifier("postgre") EmployeeDao employeeDao) {
-    this.employeeDao = employeeDao;
+  @Autowired
+  public EmployeeService (EmployeeDao employee_dao)
+   {
+    this.employee_dao = employee_dao;
    }
-   
-   public Employee createEmployee (Employee new_employee)
-    {
-     UUID employee_id = UUID.randomUUID();
-     return new Employee(employee_id, new_employee.getFirst_name(), new_employee.getLast_name());
-    }
 
-   public int indexNewEmployee (Employee designated_employee)
-    {
-     Employee employee = createEmployee(designated_employee);
-     employeeDao.save(employee);
-     return 1;
-    }
+  @Override
+  public Employee createEmployee(UUID employee_id, String first_name, String last_name)
+   {
+    return new Employee(employee_id, first_name, last_name);
+   }
 
-   public Optional<Employee> retrieveEmployee (UUID designated_employee) throws UserErrors
-    {
-     Optional<Employee> employee_details = employeeDao.retrieveDesignatedEmployee(designated_employee);
-     if (employee_details.isPresent() == false)
-      {
-       throw new UserErrors("Employee was not found amongst our records");
-      }
-     return employee_details;
-    }
+  public void indexNewEmployee (Employee designated_employee)
+   {
+    Employee employee_details = createEmployee(designated_employee);
+    employee_dao.save(employee_details);
+   }
 
-   public List<Employee> currentEmployees ()
-    {
-     return employeeDao.findAll();
-    }
-  }
+  @Override
+  public Optional<Employee> retrieveDesignatedEmployee(UUID employee_id) throws UserErrors
+   {
+    return Optional.empty();
+   }
+
+  @Override
+  public List<Employee> retrieveEmployeesList()
+   {
+    return employee_dao.findAll();
+   }
+ }
