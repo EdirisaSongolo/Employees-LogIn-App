@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@RequestMapping("hourlyEmployees")
+@RequestMapping("hourlyemployee")
 @RestController
 public class HourlyController
  {
